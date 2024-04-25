@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latihan</title>
+  </head>
+  <body>
+    <h1>To do list app</h1>
+    <div id="outputTask"></div>
+    <script>
+      // array untuk menyimpan daftar tags
+      var tasks = [];
+
+      // element buat output
+      const outputTask = document.getElementById("outputTask");
+
+      //   panggil fungsi showTask
+      showTask();
+
+      function showTask() {
+        if (tasks.length <= 0) {
+          // tampilkan empty task
+          outputTask.innerHTML = `
+            <p>Belum ada tugas</P>      
+            <button onclick="oneTask()">Tambah Tugas</button>`;
+        } else {
+          const ul = document.createElement("ul");
+          for (let id = 0; id < tasks.length; id++) {
+            const li = document.createElement("li");
+            const btnEditDelete = `
+            <button onclick="editTask(${id})">Edit</button>
+            <button onclick="deleteTask(${id})">Delete</button>
+            `;
+            li.innerHTML = `${tasks[id]} - ${btnEditDelete}`;
+            ul.appendChild(li);
+          }
+          //   tampilkan list task
+          outputTask.replaceChildren(ul);
+          outputTask.innerHTML += `
+          <button onclick="oneTask()">Tambah Tugas</button>
+          <button onclick="clearTask()">Clear</button>`;
+        }
+      }
+
+      function oneTask() {
+        const newTask = prompt("tambahkan tugas baru");
+        if (newTask) {
+          // tambahkan data baru ke array
+          tasks.push(newTask);
+          showTask();
+        }
+      }
+
+      function clearTask() {
+        tasks = [];
+        showTask();
+      }
+
+      function editTask(id) {
+        const oldTask = tasks[id];
+        const newTask = prompt("edit tugas", oldTask);
+        if (newTask) {
+          tasks[id] = newTask;
+          showTask();
+        }
+      }
+
+      function deleteTask(id) {
+        const confirmToDelete = confirm("apakah yakin akan menghapus?");
+        if (confirmToDelete) {
+          tasks.splice(id, 1); //cuma hapus 1 data
+          showTask();
+        }
+      }
+    </script>
+  </body>
+</html>
