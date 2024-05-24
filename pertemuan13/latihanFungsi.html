@@ -48,6 +48,36 @@
         width: 100%;
         padding: 0.5rem;
       }
+
+      #btnPost {
+        width: 3rem;
+        height: 3rem;
+        background-color: red;
+        color: white;
+      }
+
+      .tweet {
+        margin-bottom: 1em;
+        padding: 0.5em;
+        border-top: 1px solid silver;
+      }
+
+      .tweet header {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        margin-bottom: 0.5em;
+      }
+
+      .tweet header img {
+        border-radius: 50%;
+        height: 3em;
+        width: 3em;
+      }
+
+      .tweet .message {
+        padding-left: 4em;
+      }
     </style>
   </head>
   <body>
@@ -61,8 +91,9 @@
       </nav>
       <!-- elemen input -->
       <div class="tweet">
-        <textarea name="inputTweetMessage" id="inputTweetMessage" placeholder="what happening?" cols="30" rows="5"></textarea>
-        <button onclick="posTweet()">Post</button>
+        <textarea name="inputTweetMessage" id="inputTweetMessage" placeholder="what happening?" cols="30" rows="5" onkeyup="calculateCharCount(this)"></textarea>
+        <button id="btnPost" onclick="posTweet()">Post</button>
+        <span id="charCountRemaining"></span>
       </div>
       <!-- elemen output -->
       <h1>Feeds</h1>
@@ -77,7 +108,7 @@
         name: "Alwi",
         username: "@Alwi",
         getAvatar: function () {
-          return `https://ui-avatars.com/api/?name=${this.name}&background=random`;
+          return `https://ui-avatars.com/api/?name=Muhammad+Alwi`;
         },
       };
 
@@ -85,6 +116,24 @@
         // tampilkan object user ke navbar
         document.getElementById("userName").textContent = user.name;
         document.getElementById("userAvatar").src = user.getAvatar();
+      }
+
+      function calculateCharCount(textarea) {
+        const MAX_CHAR_ALLOWED = 140;
+        const charRamaining = document.getElementById("charCountRemaining");
+        const remaining = MAX_CHAR_ALLOWED - textarea.value.length;
+        charRamaining.textContent = remaining;
+
+        if (remaining < 10) {
+          charRamaining.style.color = "tomato";
+        } else if (remaining < 30) {
+          charRamaining.style.color = "blue";
+        } else {
+          charRamaining.style.color = "black";
+        }
+
+        const disabled = remaining < 0 ? true : false;
+        document.getElementById("btnPost").disabled = disabled;
       }
 
       function posTweet() {
@@ -109,32 +158,50 @@
           document.getElementById("feed").innerHTML = "";
 
           for (let index = 0; index <= posts.length; index++) {
+            // const tweetTemplate = `
+            // <div class="tweet">
+            //     <header>
+            //         <img src="${posts[index].author.getAvatar}">
+            //             ${posts[index].author.name}
+            //             (${posts[index].author.username})
+            //             &middot;
+            //             ${posts[index].date}
+            //     </header>
+            //     <p class="message">
+            //         ${posts[index].message}
+            //     </p>
+            // </div
+            // `;
+            // document.getElementById("feed").innerHTML += tweetTemplate;
+          }
+          posts.forEach((tweet) => {
             const tweetTemplate = `
             <div class="tweet">
                 <header>
-                    <img src="${posts[index].author.getAvatar}">
-                        ${posts[index].author.name}
-                        (${posts[index].author.username})
+                    <img src="${tweet.author.getAvatar()}">
+                        ${tweet.author.name}
+                        (${tweet.author.username})
                         &middot;
-                        ${posts[index].date}
+                        ${tweet.date}
                 </header>
                 <p class="message">
-                    ${posts[index].message}
+                    ${tweet.message}
                 </p>
             </div
             `;
 
             document.getElementById("feed").innerHTML += tweetTemplate;
-          }
+          });
         }
 
         // tambahkan object ke dalam array posts
         posts.unshift(tweet);
+
+        document.getElementById("inputTweetMessage").value = "";
+
+        //  tamapilkan tweet
+        showTweet();
       }
-
-      //  tamapilkan tweet
-      showTweet();
-
       //  event setelah document html setelah di load
       document.addEventListener("DOMContentLoaded", () => {
         // panggil fungsi user profile
