@@ -17,7 +17,7 @@
             <span class="badge bg-secondary" id="userHeigh">160cm</span>
             <span class="badge bg-secondary" id="userGender">Laki-laki</span>
           </p>
-          <p class="card-text small text-secondary">Lokasi User</p>
+          <p class="card-text small text-secondary" id="userLocation">Lokasi User</p>
           <p class="card-text" id="userHoby"></p>
           <button class="btn btn-primary w-100" id="btnUserStatus">Single</button>
         </div>
@@ -27,7 +27,7 @@
       // buat biodata kamu dengan JSON
       const myJsonData = `{
     "nama": "Muhammad Alwi",
-    "Lokasi": "Makassar, Indonesia",
+    "lokasi": "Makassar, Indonesia",
     "foto": "https://i.pravatar.cc/150?img=58",
     "tinggi": 160,
     "usia": 21,
@@ -53,6 +53,7 @@
       document.querySelector("#userHeigh").textContent = myData.tinggi + "cm";
       document.querySelector("#userGender").textContent = myData.jenisKelamin;
       document.querySelector("#userHoby").textContent = "Hobi Saya: " + myData.hobi;
+      document.querySelector("#userLocation").textContent = myData.lokasi;
 
       const userStatus = myData.udahNikah ? "Married" : "Single";
       const btnStatus = document.querySelector("#btnUserStatus");
