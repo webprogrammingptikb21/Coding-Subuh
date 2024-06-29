@@ -4,6 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>latihan ajax</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      #product-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .product {
+        max-width: 260px;
+        border: 1px solid silver;
+        border-radius: 16px;
+        padding: 1rem;
+        margin: auto;
+      }
+
+      .product img {
+        max-width: 120px;
+      }
+
+      .product .price {
+        font-weight: bold;
+        color: green;
+        font-size: 1rem;
+        padding: 2rem 1rem;
+      }
+    </style>
   </head>
   <body>
     <header id="header"></header>
@@ -28,13 +59,23 @@
         xhr.send();
       }
 
-      function showProducts() {
+      function showProducts(products) {
         const productList = document.querySelector("#product-list");
-        // hapus loading
+        // Clear the existing content
         productList.innerHTML = "";
 
-        // mengisi product list dengan data product
-        products.forEach();
+        // Fill product list with product data
+        products.forEach((product) => {
+          const productTemplate = `
+      <div class="product">
+        <img src="${product.image}" alt="${product.title}"/>
+        <h3>${product.title}</h3>
+        <p class="price">${formatUSD(product.price)}</p>
+        <p>${product.description}</p>
+      </div>
+    `;
+          productList.innerHTML += productTemplate;
+        });
       }
 
       function loadProducts() {
@@ -47,11 +88,19 @@
           const products = JSON.parse(xhr.responseText);
           console.log(products);
           //  show product ke HTML
+          showProducts(products);
         });
 
         // membuka koneksi ajax
         xhr.open("GET", URL, true);
         xhr.send();
+      }
+
+      function formatUSD(number) {
+        return number.toLocaleString("us", {
+          style: "currency",
+          currency: "USD",
+        });
       }
 
       document.addEventListener("DOMContentLoaded", () => {
