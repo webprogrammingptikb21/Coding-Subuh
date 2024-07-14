@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card mt-5 mx-auto" style="max-width: 18rem">
+        <img src="" class="card-img-top" alt="User Avatar" id="userAvatar" />
+        <div class="card-body">
+          <h5 class="card-title" id="userName">Card Title</h5>
+          <p class="card-text">
+            <span class="badge bg-secondary" id="userAge">10 Tahun</span>
+            <span class="badge bg-secondary" id="userHeigh">160cm</span>
+            <span class="badge bg-secondary" id="userGender">Laki-laki</span>
+          </p>
+          <p class="card-text small text-secondary" id="userLocation">Lokasi User</p>
+          <p class="card-text" id="userHoby"></p>
+          <button class="btn btn-primary w-100" id="btnUserStatus">Single</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      // buat biodata kamu dengan JSON
+      const myJsonData = `{
+    "nama": "Muhammad Alwi",
+    "lokasi": "Makassar, Indonesia",
+    "foto": "https://i.pravatar.cc/150?img=58",
+    "tinggi": 160,
+    "usia": 21,
+    "jenisKelamin": "Laki-Laki",
+    "udahNikah": false,
+    "hobi": [
+        "Baca Buku",
+        "Healing",
+        "Ngoding"
+    ]
+}`;
+      // ubah data json menjadi object javascript
+      const myData = JSON.parse(myJsonData);
+      console.log("JS object", myData);
+
+      const myDataString = JSON.stringify(myData);
+      console.log("JSON String:", myDataString);
+
+      //   menampilkan data ke HTML
+      document.querySelector("#userAvatar").src = myData.foto;
+      document.querySelector("#userName").textContent = myData.nama;
+      document.querySelector("#userAge").textContent = myData.usia + " Tahun";
+      document.querySelector("#userHeigh").textContent = myData.tinggi + "cm";
+      document.querySelector("#userGender").textContent = myData.jenisKelamin;
+      document.querySelector("#userHoby").textContent = "Hobi Saya: " + myData.hobi;
+      document.querySelector("#userLocation").textContent = myData.lokasi;
+
+      const userStatus = myData.udahNikah ? "Married" : "Single";
+      const btnStatus = document.querySelector("#btnUserStatus");
+      btnStatus.textContent = userStatus;
+      btnStatus.disabled = myData.udahNikah;
+
+      if (myData.udahNikah) {
+        btnStatus.classList.remove("btn-primary");
+        btnStatus.classList.add("btn-success");
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  </body>
+</html>

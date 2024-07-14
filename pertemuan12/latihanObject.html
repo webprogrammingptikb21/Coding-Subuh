@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latihan Object HTML</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      // variabel interval
+      var chargingInterval;
+      var disChargingInterval;
+
+      disChargingInterval = setInterval(() => {
+        phone.disCharging();
+        showPhone();
+      }, 1000);
+
+      // membuat object phone
+      var phone = {
+        name: "Vivo V21",
+        wifiOn: false,
+        celulerData: false,
+        battery: 10,
+        toggleWifi: function () {
+          this.wifiOn = !this.wifiOn;
+        },
+        toggleCelulerData: function () {
+          this.celulerData = !this.celulerData;
+        },
+        charging: function () {
+          if (this.battery >= 100) {
+            alert(`${this.battery}% full charged`);
+            // clear interval
+            clearInterval(chargingInterval);
+            startCharging();
+            return;
+          }
+          this.battery++;
+        },
+        disCharging: function () {
+          if (this.battery <= 1) {
+            alert("Baterai Kosong, Hp akan Mati");
+            // stop interval
+            clearInterval(disChargingInterval);
+            return;
+          }
+          this.battery--;
+        },
+      };
+
+      //   mengubah nama phone
+      phone.name = "Vivo v23 E";
+
+      // menyalakan wifi dengan fungsi toggle dari object phone
+      phone.toggleWifi(); //wifi on menjadi true
+
+      //   tampilkan hp
+      showPhone();
+
+      function showPhone() {
+        // destructuring object
+        let { name, wifiOn, celulerData, battery } = phone;
+
+        const displayTemplate = `
+        <h1>${name}</h1>
+        <p> 
+            battery: <progress min="0" max="100" value=${battery}></progress> ${battery}%
+            </p>
+        <p>Wifi: ${wifiOn ? "on" : "off"}</p>
+        <p>Data: ${celulerData ? "on" : "off"}</p>
+        <hr>
+
+        <button onclick="toggleWifi()">Toggle Wifi</button>
+        <button onclick="toggleData()">Toggle Data</button>
+        <button onclick="startCharging()">⚡Charging</button>
+        `;
+        document.getElementById("app").innerHTML = displayTemplate;
+      }
+      function toggleWifi() {
+        phone.toggleWifi();
+        showPhone();
+      }
+
+      function toggleData() {
+        phone.toggleCelulerData();
+        showPhone();
+      }
+
+      function startCharging() {
+        chargingInterval = setInterval(() => {
+          phone.charging();
+          showPhone();
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
