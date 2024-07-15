@@ -10,7 +10,62 @@
     <input type="file" name="file" id="fileInput" />
     <button onclick="oploadFile()">Upload</button>
     <br />
-    <progress id="progresBar" min="0" max="100"></progress>
+    <progress id="progresBar" min="0" max="100" value="0"></progress>
     <span id="percentProgres"></span>
+
+    <script>
+      var progressBar = document.querySelector("#progressBar");
+      var percentProgres = document.querySelector("#percentProgres");
+      function upload(UPLOAD_URL, formData) {
+        return new Promise((resolve, rejcect) => {
+          // membuat object XHR
+          const xhr = new XMLHttpRequest();
+
+          // tambahkan event handling untuk progres
+          xhr.upload.addEventListener("progress", handleProgressUpload);
+
+          xhr.onload = () => {
+            if (xhr.status === 2000) {
+              resolve("File Berhasil diupload");
+            } else {
+              rejcect("Terjadi Kesalahan dalam opload file");
+            }
+          };
+
+          xhr.onerror = () => {
+            "Terjadi kesalahan dalam oupload file";
+          };
+
+          xhr.open("POST", UPLOAD_URL, true);
+          xhr.send(formData);
+        });
+      }
+
+      function handleProgressUpload(e) {
+        if (e.lengthComputable) {
+          let percentComplete = ((e.loaded / e.total) * 100).toFixed();
+          progressBar.value = percentComplete;
+          percentProgres.textContent = percentComplete + "%";
+          console.log(percentComplete + "% complete");
+        }
+      }
+
+      async function oploadFile() {
+        const upload_URL = "https://33zfhf-3000.csb.app/upload";
+        const fileInput = document.querySelector("#fileInput");
+        const file = fileInput.files[0];
+
+        // membuat object formData
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+          const uploadPromise = await upload(upload_URL, formData);
+          alert(await uploadPromise);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    </script>
   </body>
 </html>
