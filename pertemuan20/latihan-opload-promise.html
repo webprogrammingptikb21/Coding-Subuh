@@ -62,6 +62,7 @@
         try {
           const uploadPromise = await upload(upload_URL, formData);
           alert(await uploadPromise);
+          progressBar.value = 0;
         } catch (error) {
           console.log(error);
         }
