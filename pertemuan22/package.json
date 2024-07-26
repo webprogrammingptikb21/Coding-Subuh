@@ -10,6 +10,11 @@
   "author": "alwi",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.2"
+    "axios": "^1.7.2",
+    "bootstrap": "^5.3.3"
+  },
+  "devDependencies": {
+    "vite": "^5.3.4",
+    "vitest": "^2.0.3"
   }
 }

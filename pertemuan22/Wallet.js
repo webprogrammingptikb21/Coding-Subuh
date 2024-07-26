@@ -40,5 +40,5 @@ try {
   }
 }
 
-export default Wallet;
-export { Wallet, BalanceError };
+// export class supaya bisa diimport di file lain
+exports = { Wallet, BalanceError };
