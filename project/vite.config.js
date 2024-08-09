@@ -1,6 +1,5 @@
-import Popper from "@popperjs/core";
-import { resolve } from "path";
-import { build } from "vite";
+import { resolve, join } from "path";
+import { glob } from "glob";
 
 export default {
   root: resolve(__dirname, "src"),
@@ -11,14 +10,13 @@ export default {
   },
   build: {
     rollupOptions: {
-      input: {
-        index: resolve(__dirname, "src/index.html"),
-        register: resolve(__dirname, "src/register.html"),
-      },
+      input: glob.sync(resolve(__dirname, "src", "*.html")),
     },
+    outDir: join(__dirname, "dist"),
   },
   server: {
-    port: 8080,
-    hot: true,
+    port: 8011,
+    hmr: true,
+    host: "0.0.0.0",
   },
 };
