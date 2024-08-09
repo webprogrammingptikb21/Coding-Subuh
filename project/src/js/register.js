@@ -1,4 +1,4 @@
-import { API } from "./api";
+import { API } from "./API";
 import { confetti } from "@tsparticles/confetti";
 
 // Import our custom CSS
@@ -9,9 +9,10 @@ import * as bootstrap from "bootstrap";
 
 // setup element DOM
 const formRegister = document.querySelector("#formRegister");
-const inputAcceptTerm = document.querySelector("#inputAcceptTerms");
-const btnShowPassword = document.querySelector("#btnShowPassword");
+const inputAcceptTerm = document.querySelector("#flexCheckDefault");
+const btnShowPassword = document.querySelector("#btnPassword");
 const btnSubmit = document.querySelector("#btnSubmit");
+const erorAlert = document.querySelector("#erorAlert");
 
 // membuat custom event
 const congratulationEvent = new Event("congratulation");
@@ -24,11 +25,11 @@ document.addEventListener("congratulation", handleCongratulation);
 
 function handleTermsChecked(event) {
   console.log(event.target.checked);
-  btnSubmit.disabled = !event.target.checked;
+  btnSubmit.disabled = !event.target.checked; // Enable/disable tombol submit berdasarkan checkbox
 }
 
 function handleShowHidePassword(event) {
-  const inputPassword = document.querySelector("#inputPassword");
+  const inputPassword = document.querySelector("#exampleInputPassword1");
 
   if (inputPassword.type === "password") {
     inputPassword.type = "text";
@@ -63,45 +64,28 @@ function handleSubmit(event) {
 
   // ambil data dari promise dengan then..catch
   API.signUp(newUser)
-    .then(async (response) => {
-      const data = await response.json();
-      console.log(data);
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Uppz, gagal mendaftar");
+      }
+      return response.json();
+    })
 
-      btnSubmit.disabled = false;
-      btnSubmit.textContent = data.message ?? "Berhasil Mendaftar!";
-      btnSubmit.classList.replace("btn-primary", "btn-success");
-
+    .then((data) => {
       // trigger custom event
       document.dispatchEvent(congratulationEvent);
     })
+
     .catch((err) => {
       console.log(err);
+      erorAlert.classList.remove("d-none");
+      //errorAlert.textContent = err.message
+    })
+    .finally((_) => {
       // reset button submit ke semula
       btnSubmit.disabled = false;
       btnSubmit.textContent = "Daftar";
-      btnSubmit.classList.replace("btn-success", "btn-primary");
     });
-
-  // kirim data ke backend URL
-  // const response = await API.signUp(newUser);
-
-  // if (response.ok) {
-  //   const data = await response.json();
-  //   console.log(data);
-
-  //   btnSubmit.disabled = false;
-  //   btnSubmit.textContent = data.message ?? "Berhasil Mendaftar!";
-  //   btnSubmit.classList.replace("btn-primary", "btn-success");
-
-  // trigger custom event
-  //   document.dispatchEvent(congratulationEvent);
-  // }
-
-  // console.log(response);
-
-  // reset button submit ke semula
-  // btnSubmit.disabled = false;
-  // btnSubmit.textContent = "Daftar";
 }
 
 // handle custom event

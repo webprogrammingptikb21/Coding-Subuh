@@ -3,30 +3,22 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Register</title>
-    <script type="module" src="./js/register.js"></script>
+    <title>Login</title>
+    <script type="module" src="./js/login.js"></script>
   </head>
 
   <body>
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-6 mx-auto">
-          <h1>Buat Akun Baru</h1>
+          <h1>Masuk ke akun anda</h1>
 
-          <p>sudah punya akun <a href="login.html">Login Di Sini</a></p>
+          <p>Belum punya akun?<a href="login.html"> Daftar Di Sini</a></p>
 
           <!-- error message -->
-          <div class="alert alert-danger d-none" role="alert" id="erorAlert">Pendaftaran Gagal, Silahkan coba lagi</div>
+          <div class="alert alert-danger d-none" role="alert" id="erorAlert">Login Gagal, Silahkan coba lagi</div>
 
           <form action="" id="formRegister">
-            <div class="mb-3">
-              <label for="label" class="form-label" name="name">Nama</label>
-              <input type="text" name="name" class="form-control" id="inputName" placeholder="Inputkan Nama" />
-            </div>
-            <div class="mb-3">
-              <label for="phoneNumber">Phone</label>
-              <input type="text" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Phone Number" />
-            </div>
             <div class="mb-3">
               <label for="label" class="form-label">Email</label>
               <input type="email" name="email" class="form-control" id="label" placeholder="Inputkan Email" aria-describedby="emailHelp" />
@@ -46,11 +38,7 @@
                 </button>
               </div>
             </div>
-            <div class="mb-3 form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-              <label class="form-check-label" for="flexCheckDefault"> Setuju dengan syarat ketentuan </label>
-            </div>
-            <button type="submit" class="btn btn-primary w-100 p-2" id="btnSubmit" disabled>Submit</button>
+            <button type="submit" class="btn btn-primary w-100 p-2" id="btnSubmit">Login</button>
           </form>
 
           <p class="mt-5">Kembali ke <a href="login.html">Home</a></p>
