@@ -15,4 +15,6 @@ function sendPostRequest(URL, data) {
 export const API = {
   signUp: (newUser) => sendPostRequest(`${BASE_URL}/register`, newUser),
   login: (email, password) => sendPostRequest(`${BASE_URL}/auth`, { email, password }),
+  getCurrentUser: _ => fetchWithToken{`${BASE_URL}/me`},
+  getCartCount: _ => fetchWithToken{`${BASE_URL}/cart/count`}
 };

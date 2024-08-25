@@ -4,12 +4,38 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bootstrap w/ Vite</title>
+    <script type="module" src="./js/main.js"></script>
   </head>
   <body>
-    <div class="container py-4 px-3 mx-auto">
-      <h1>Hello, Bootstrap and Vite!</h1>
-      <button class="btn btn-primary">Primary button</button>
-    </div>
-    <script type="module" src="./js/main.js"></script>
+    <nav class="navbar navbar-light" style="background-color: aqua">
+      <div class="container">
+        <a href="index.html" class="navbar-brand">App Toko</a>
+
+        <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+          <li class="nav-item hstack gap-2">
+            <div id="loginRegisterButtons">
+              <a href="login.html" class="btn btn-outline-primary">Login</a>
+              <a href="register.html" class="btn btn-outline-primary">Register</a>
+            </div>
+            <a href="cart.html" id="cart-link" class="btn btn-outline-primary position-relative"
+              ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
+              </svg>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <span id="cart-count">99+</span>
+                <span class="visually-hidden">Items</span></span
+              >
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- header -->
+    <header class="container mt-4 bg-primary text-light rounded-4 mx-auto">
+      <h1>diskon 50% untuk pengguna baru</h1>
+      <p class="lead">Dapatkan potongan harga max 50.000 untuk pengguna baru, daftar sekarang!</p>
+    </header>
+
+    <!-- listProduk -->
   </body>
 </html>

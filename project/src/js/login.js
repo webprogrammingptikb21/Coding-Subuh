@@ -8,7 +8,6 @@ import * as bootstrap from "bootstrap";
 
 // setup element DOM
 const formRegister = document.querySelector("#formRegister");
-const inputAcceptTerm = document.querySelector("#flexCheckDefault");
 const btnShowPassword = document.querySelector("#btnPassword");
 const btnSubmit = document.querySelector("#btnSubmit");
 const erorAlert = document.querySelector("#erorAlert");
@@ -35,7 +34,7 @@ function handleShowHidePassword(event) {
   }
 }
 
-function handleSubmit(event) {
+async function handleSubmit(event) {
   // cegah defaul aksi yang dilakukan di browser
   event.preventDefault();
 
@@ -48,27 +47,24 @@ function handleSubmit(event) {
   btnSubmit.disabled = true;
   btnSubmit.innerHTML = `<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>Loading...`;
 
-  // ambil data dari promise dengan then..catch
-  //   API.signUp(newUser)
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Uppz, gagal mendaftar");
-  //       }
-  //       return response.json();
-  //     })
+  // request login ke server backend
+  try {
+    const response = await API.login(email, password);
+    if (!response.ok) {
+      throw new Error("Upps, gagal login");
+    }
 
-  //     .then((data) => {
-  //       // trigger custom event
-  //     })
+    const { token } = await response.json();
+    // simpan token ke local storage
+    localStorage.setItem("token", token);
 
-  //     .catch((err) => {
-  //       console.log(err);
-  //       erorAlert.classList.remove("d-none");
-  //       //errorAlert.textContent = err.message
-  //     })
-  //     .finally((_) => {
-  //       // reset button submit ke semula
-  //       btnSubmit.disabled = false;
-  //       btnSubmit.textContent = "Daftar";
-  //     });
+    window.location.href = "index.html";
+  } catch (err) {
+    // tampilkan pesan error
+    erorAlert.classList.remove("d-none");
+  } finally {
+    // reset button
+    btnSubmit.disabled = false;
+    btnSubmit.innerHTML = `login`;
+  }
 }
